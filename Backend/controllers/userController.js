@@ -72,3 +72,17 @@ exports.login = async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 };
+
+
+
+exports.details = async(req,res)=>{
+  try {
+    const {id } = req.params;
+   
+    const user = await userModel.find({_id : id})
+    res.status(201).send({msg : `User details with id - ${id}` , user})
+
+  } catch (error) {
+    
+  }
+}

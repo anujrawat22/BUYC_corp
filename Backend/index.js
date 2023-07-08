@@ -3,6 +3,7 @@ const { connection } = require("./config/db")
 const { userRouter } = require("./routes/userRouter")
 const { SpecRouter } = require("./routes/oemSpecsRouter")
 const { authenticate } = require("./middleware/authMiddleware")
+const { InventoryRouter } = require("./routes/inventoryRouter")
 require("dotenv").config()
 
 
@@ -16,6 +17,7 @@ app.get("/",(req,res)=>{
 
 app.use("/api/user",userRouter)
 app.use("api/OEMSpecs",authenticate,SpecRouter)
+app.use("api/inventory",authenticate,InventoryRouter)
 
 app.listen(port,async ()=>{
   try {

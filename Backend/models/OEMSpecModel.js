@@ -6,7 +6,7 @@ const OEMSpecsSchema = new mongoose.Schema({
   listPrice: { type: Number, required: true },
   colors: { type: [String], required: true },
   mileage: { type: Number, required: true },
-  bhp : { type: Number, required: true },
+  power : { type: Number, required: true },
   torque : { type: Number, required: true },
   maxSpeed: { type: Number, required: true },
   OEM_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
