@@ -20,8 +20,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useAuth } from "../Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate()
   const { login } = useAuth();
   const loginemail = useRef(null);
   const loginpassword = useRef(null);
@@ -56,6 +58,13 @@ const Login = () => {
         progress: undefined,
         theme: "dark",
       });
+      if(role === 'OEM'){
+        navigate("/createcar")
+      }else if(role === "Dealer"){
+        navigate("/buycars")
+      }else if(role === "Buyer"){
+        navigate("/dealer")
+      }
     } else {
       toast.error(msg, {
         position: "bottom-right",

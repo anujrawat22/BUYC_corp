@@ -18,6 +18,7 @@ export function AuthProvider(props) {
   const [authUser, setAuthUser] = useState(initialvalue);
 
   const login = (token, role,name,image) => {
+    
     setAuthUser({
       isAuth: true,
       token,
@@ -25,12 +26,11 @@ export function AuthProvider(props) {
       name,
       image 
     });
-    console.log(authUser)
+    
   };
 
   const logout = () => {
     setAuthUser(initialvalue);
-    console.log(authUser)
   };
 
   const value = {

@@ -6,6 +6,7 @@ import Dealers from "../pages/Dealers";
 import BuyCars from "../pages/BuyCars";
 import Cars from "../pages/Cars";
 import CreateCar from "../pages/CreateCar";
+import ShowCars from "../pages/ShowCars";
 
 function Allroutes() {
   return (
@@ -16,6 +17,7 @@ function Allroutes() {
       <Route path="/buycars" element={<BuyCars />}></Route>
       <Route path="/cars" element={<Cars />}></Route>
       <Route path="/createcar" element={<CreateCar />}></Route>
+      <Route path="/showcars" element={<ShowCars />}></Route>
     </Routes>
   );
 }
