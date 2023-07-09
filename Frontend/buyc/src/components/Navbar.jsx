@@ -4,39 +4,26 @@ import {
   Box,
   Flex,
   Avatar,
-  Link,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   MenuDivider,
-  useDisclosure,
   useColorModeValue,
   Stack,
   useColorMode,
   Center,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-
-const NavLink = ({ children }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-    href={"#"}
-  >
-    {children}
-  </Link>
-);
+import { useAuth } from "../Contexts/AuthContext";
+import {  useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate()
+  const { authUser, logout } = useAuth();
   const { colorMode, toggleColorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -49,38 +36,61 @@ const Navbar = () => {
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
 
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rounded={"full"}
-                  variant={"link"}
-                  cursor={"pointer"}
-                  minW={0}
-                >
-                  <Avatar
-                    size={"sm"}
-                    src={"https://avatars.dicebear.com/api/male/username.svg"}
-                  />
-                </MenuButton>
-                <MenuList alignItems={"center"}>
-                  <br />
-                  <Center>
-                    <Avatar
-                      size={"2xl"}
-                      src={"https://avatars.dicebear.com/api/male/username.svg"}
-                    />
-                  </Center>
-                  <br />
-                  <Center>
-                    <p>Username</p>
-                  </Center>
-                  <br />
-                  <MenuDivider />
-                  <MenuItem>Your Servers</MenuItem>
-                  <MenuItem>Account Settings</MenuItem>
-                  <MenuItem>Logout</MenuItem>
-                </MenuList>
-              </Menu>
+              {authUser.isAuth ? (
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rounded={"full"}
+                    variant={"link"}
+                    cursor={"pointer"}
+                    minW={0}
+                  >
+                    {authUser.image ? (
+                      <Avatar size={"sm"} src={authUser.image} />
+                    ) : (
+                      <Avatar
+                        size={"sm"}
+                        src={
+                          "https://avatars.dicebear.com/api/male/username.svg"
+                        }
+                      />
+                    )}
+                  </MenuButton>
+                  <MenuList alignItems={"center"}>
+                    <br />
+                    <Center>
+                      {authUser.image ? (
+                        <Avatar size={"sm"} src={authUser.image} />
+                      ) : (
+                        <Avatar
+                          size={"sm"}
+                          src={
+                            "https://avatars.dicebear.com/api/male/username.svg"
+                          }
+                        />
+                      )}
+                    </Center>
+                    <br />
+                    <Center>
+                      {authUser.name ? <p>{authUser.name}</p> : null}
+                    </Center>
+                    <br />
+                    <MenuDivider />
+                    <MenuItem>Your Servers</MenuItem>
+                    <MenuItem>Account Settings</MenuItem>
+                    <MenuItem onClick={() => logout()}>Logout</MenuItem>
+                  </MenuList>
+                </Menu>
+              ) : (
+                <>
+                  <Button colorScheme="teal" variant="outline" onClick={()=>navigate("/signup")}>
+                    Sign up
+                  </Button>
+                  <Button colorScheme="teal" variant="outline" onClick={()=>navigate("/login")}>
+                    Log in 
+                  </Button>
+                </>
+              )}
             </Stack>
           </Flex>
         </Flex>
