@@ -54,7 +54,7 @@ const BuyCars = () => {
       }}
     >
       
-      {carData.length &&
+      {carData.length>0 &&
         carData.map((item) => {
           return (
             <Center py={9} key={item._id}>
@@ -68,6 +68,7 @@ const BuyCars = () => {
                 rounded={"lg"}
                 pos={"relative"}
                 zIndex={1}
+                m={10}
               >
                 <Box
                   rounded={"lg"}
@@ -109,7 +110,7 @@ const BuyCars = () => {
                     {item.username}
                   </Heading>
                   <Stack direction={"row"} align={"center"}>
-                  <Button colorScheme='blackAlpha' onClick={()=>setOEMid(item._id)}>Show Cars</Button>
+                  <Button colorScheme='blue' onClick={()=>setOEMid(item._id)}>Show Cars</Button>
                   </Stack>
                 </Stack>
               </Box>

@@ -20,11 +20,13 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../Contexts/AuthContext";
+import Swal from "sweetalert2";
 
 const CreateCar = () => {
   
   const [colors, setColors] = useState([]);
   const { authUser } = useAuth()
+  console.log(authUser)
    const model = useRef(null);
   const year = useRef(null);
   const mileage = useRef(null);
@@ -69,7 +71,7 @@ const CreateCar = () => {
         return;
       }
     }
-      
+      try {
         let res = await fetch(`http://localhost:8080/api/OEMSpecs/create`,{
           method : "POST",
           body : JSON.stringify(obj),
@@ -78,8 +80,20 @@ const CreateCar = () => {
             authorization : `bearer ${authUser.token}`
            }
         })
-        let { msg } = await res.json()
-        console.log(msg)
+        let { msg }= await res.json()
+        console.log(msg);
+        if(msg === 'Model of the vehicle create sucessfully')
+        Swal.fire({
+          title: "Congratulations",
+          text: `Model Created Sucessfully`,
+          icon: 'success',
+          confirmButtonText: 'Continue'
+        })
+        
+      } catch (error) {
+       
+      }
+        
       
     
   };

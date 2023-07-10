@@ -63,7 +63,7 @@ const Login = () => {
       }else if(role === "Dealer"){
         navigate("/buycars")
       }else if(role === "Buyer"){
-        navigate("/dealer")
+        navigate("/dealers")
       }
     } else {
       toast.error(msg, {

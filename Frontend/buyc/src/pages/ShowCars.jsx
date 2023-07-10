@@ -25,7 +25,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -49,11 +49,21 @@ const ShowCars = () => {
 
   const fetchdata = async () => {
     try {
-      fetch(`http://localhost:8080/api/OEMspecs/getspecs/${OEMid}`)
+      fetch(`http://localhost:8080/api/OEMspecs/getspecs/${OEMid}`,{
+        headers : {
+          authorization  : `bearer ${authUser.token}`
+        }
+      })
         .then((res) => res.json())
-        .then((data) => setData(data.model))
+        .then((data) => {
+          console.log(data);
+          setData(data.model)
+        }
+          )
         .catch((err) => console.log(err));
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handlesubmit = () => {
@@ -87,7 +97,7 @@ const ShowCars = () => {
       });
       return;
     }
-    fetch(`http://localhost:8080/api/inventory/create/${OEMid}`, {
+    fetch(`http://localhost:8080/api/inventory/create/${caritem._id}`, {
       method: "POST",
       body: JSON.stringify(obj),
       headers: {
@@ -102,7 +112,7 @@ const ShowCars = () => {
             Swal.fire({
                 title: "Congratulations",
                 text: `You Bought ${caritem.model} ${caritem.year}`,
-                icon: 'sucess',
+                icon: 'success',
                 confirmButtonText: 'Continue'
               })  
         }
@@ -131,7 +141,7 @@ const ShowCars = () => {
 
       <ToastContainer />
       <div>
-        {data.map((item) => {
+        {data.length>0 ? data.map((item) => {
           return (
             <Center py={6} key={item._id}>
               <Stack
@@ -240,7 +250,8 @@ const ShowCars = () => {
               </Stack>
             </Center>
           );
-        })}
+        })
+      : <h1>No Cars to Show</h1>}
         <Modal isOpen={isOpen} onClose={onClose} w={80}>
           <ModalOverlay />
           <ModalContent>

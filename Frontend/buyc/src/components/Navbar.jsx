@@ -17,10 +17,10 @@ import {
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useAuth } from "../Contexts/AuthContext";
-import {  useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { authUser, logout } = useAuth();
   const { colorMode, toggleColorMode } = useColorMode();
 
@@ -29,7 +29,26 @@ const Navbar = () => {
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <Box>BUYC Corp.</Box>
-
+          <Stack direction={"row"} spacing={7}>
+            <ul style={{ listStyle: "none" }}>
+              <li>
+                {authUser.role === "Dealer" && (
+                  <Link to="/buyCars">Buy Cars</Link>
+                )}
+              </li>
+              <li>
+                {authUser.role === "Buyer" && (
+                  <Link to="/dealers">Car Inventory</Link>
+                )}
+              </li>
+              
+              <li>
+                {authUser.role === "OEM" && (
+                  <Link to="/createcar">Create Car Model</Link>
+                )}
+              </li>
+            </ul>
+          </Stack>
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={7}>
               <Button onClick={toggleColorMode}>
@@ -83,11 +102,19 @@ const Navbar = () => {
                 </Menu>
               ) : (
                 <>
-                  <Button colorScheme="teal" variant="outline" onClick={()=>navigate("/signup")}>
+                  <Button
+                    colorScheme="teal"
+                    variant="outline"
+                    onClick={() => navigate("/signup")}
+                  >
                     Sign up
                   </Button>
-                  <Button colorScheme="teal" variant="outline" onClick={()=>navigate("/login")}>
-                    Log in 
+                  <Button
+                    colorScheme="teal"
+                    variant="outline"
+                    onClick={() => navigate("/login")}
+                  >
+                    Log in
                   </Button>
                 </>
               )}

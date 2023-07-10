@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = React.createContext();
 
@@ -7,6 +8,7 @@ export function useAuth() {
 }
 
 export function AuthProvider(props) {
+  const navigate = useNavigate()
   const initialvalue = {
     isAuth: false,
     token: null,
@@ -30,6 +32,7 @@ export function AuthProvider(props) {
   };
 
   const logout = () => {
+    navigate("/login")
     setAuthUser(initialvalue);
   };
 
