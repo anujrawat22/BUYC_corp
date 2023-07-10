@@ -19,7 +19,7 @@ const Dealers = () => {
   const [caritem,setCaritem] = useState({})
   const fetchData = async () => {
     try {
-      fetch(`http://localhost:8080/api/inventory/allData`, {
+      fetch(`https://buyc-1n1z.onrender.com/api/inventory/allData`, {
         headers: {
           authorization: `bearer ${authUser.token}`,
         },
@@ -35,7 +35,7 @@ const Dealers = () => {
 
   const handleSubmit = (id)=>{
    console.log(id);
-   fetch(`http://localhost:8080/api/booking/create/${id}`,{
+   fetch(`https://buyc-1n1z.onrender.com/api/booking/create/${id}`,{
     method : "POST",
     headers : {
       'Content-type' : "application/json",

@@ -72,7 +72,7 @@ const CreateCar = () => {
       }
     }
       try {
-        let res = await fetch(`http://localhost:8080/api/OEMSpecs/create`,{
+        let res = await fetch(`https://buyc-1n1z.onrender.com/api/OEMSpecs/create`,{
           method : "POST",
           body : JSON.stringify(obj),
           headers : {

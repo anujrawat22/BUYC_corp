@@ -49,7 +49,7 @@ const ShowCars = () => {
 
   const fetchdata = async () => {
     try {
-      fetch(`http://localhost:8080/api/OEMspecs/getspecs/${OEMid}`,{
+      fetch(`https://buyc-1n1z.onrender.com/api/OEMspecs/getspecs/${OEMid}`,{
         headers : {
           authorization  : `bearer ${authUser.token}`
         }
@@ -97,7 +97,7 @@ const ShowCars = () => {
       });
       return;
     }
-    fetch(`http://localhost:8080/api/inventory/create/${caritem._id}`, {
+    fetch(`https://buyc-1n1z.onrender.com/api/inventory/create/${caritem._id}`, {
       method: "POST",
       body: JSON.stringify(obj),
       headers: {

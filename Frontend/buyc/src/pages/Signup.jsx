@@ -61,7 +61,7 @@ const Signup = () => {
         });
         return;
       }
-      const res = await fetch("http://localhost:8080/api/user/register", {
+      const res = await fetch("https://buyc-1n1z.onrender.com/api/user/register", {
         method: "POST",
         body: JSON.stringify(obj),
         headers: {

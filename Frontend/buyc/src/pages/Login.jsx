@@ -35,7 +35,7 @@ const Login = () => {
       password: loginpassword.current.value,
     };
 
-    let res = await fetch("http://localhost:8080/api/user/login", {
+    let res = await fetch("https://buyc-1n1z.onrender.com/api/user/login", {
       method: "POST",
       body: JSON.stringify(obj),
       headers: {

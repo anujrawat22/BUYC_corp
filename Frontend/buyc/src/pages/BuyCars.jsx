@@ -16,7 +16,7 @@ const BuyCars = () => {
   const navigate  = useNavigate()
 
   const fetchCarData = async () => {
-    fetch("http://localhost:8080/api/user/OEMdata")
+    fetch("https://buyc-1n1z.onrender.com/api/user/OEMdata")
       .then((res) => res.json())
       .then((data) => setCarData(data.data))
       .catch((err) => console.log(err));

@@ -11,6 +11,7 @@ import ShowCars from "../pages/ShowCars";
 function Allroutes() {
   return (
     <Routes>
+      <Route path="/" element={<Signup />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/signup" element={<Signup />}></Route>
       <Route path="/dealers" element={<Dealers />}></Route>
