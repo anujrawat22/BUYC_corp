@@ -5,11 +5,12 @@ const authenticate = (req, res, next) => {
   try {
     const token = req.headers?.authorization?.split(" ")[1];
     
-    const decoded = jwt.verify(token, process.env.privatekey);
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+   
 
     if (decoded) {
-      req.userId = decoded.userId;
-      req.role = decoded.role;
+      req.body.userId = decoded.userId;
+      req.body.role = decoded.role;
       next();
     } else {
       res.status(401).json({ msg: "Unauthorized" });
@@ -23,8 +24,8 @@ const authenticate = (req, res, next) => {
 const authorizeRoles = (roles) => {
   return async (req, res, next) => {
     try {
-      const role = req.role;
-
+      const role = req.body.role;
+    
       if (!roles.includes(role)) {
         return res.status(403).json({ msg: "Forbidden" });
       }

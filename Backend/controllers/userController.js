@@ -6,7 +6,7 @@ const { userModel } = require("../models/userModel");
 exports.register = async (req, res) => {
   try {
     const { username, email, password, contact, role ,image} = req.body;
-
+    
     const existinguser = await userModel.findOne({ email });
 
     if (existinguser) {
@@ -38,13 +38,12 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const User = await userModel.findOne({ email });
 
     if (!User) {
       return res
         .status(404)
-        .json({ msg: "User doesn't exist , Please signup" });
+        .json({ msg: "User doesn't exist" });
     }
 
     bcrypt.compare(password, User.password, function (err, result) {
@@ -56,13 +55,13 @@ exports.login = async (req, res) => {
       if (result) {
         const token = jwt.sign(
           { userId: User._id, role: User.role, name: User.name },
-          process.env.privatekey,
+          process.env.SECRET_KEY,
           { expiresIn: "7d" }
         );
         res.cookie("token", token);
         res
           .status(201)
-          .json({ msg: "User logged in successfully", token, role: User.role });
+          .json({ msg: "User logged in successfully", token, role: User.role , image : User.image , name : User.username});
       } else {
         res.status(401).json({ msg: "Invalid Credentials" });
       }
@@ -83,6 +82,18 @@ exports.details = async(req,res)=>{
     res.status(201).send({msg : `User details with id - ${id}` , user})
 
   } catch (error) {
-    
+    console.error(error);
+    res.status(500).json({ msg: "Server error" });
+  }
+}
+
+
+exports.getOEM = async(req,res)=>{
+  try {
+    const user = await userModel.find({role : "OEM"})
+    res.status(201).send({msg : "All OEM data" , data : user})
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Server error" });
   }
 }

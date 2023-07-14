@@ -4,6 +4,8 @@ const { createBooking, deleteBooking } = require("../controllers/bookingControll
 
 const bookingRouter = Router()
 
-bookingRouter.create("/create/:id",authorizeRoles(['Buyer']),createBooking)
+bookingRouter.post("/create/:id",authorizeRoles(['Buyer']),createBooking)
 
 bookingRouter.delete("/delete/:id",authorizeRoles(['Buyer']),deleteBooking)
+
+module.exports = {bookingRouter}

@@ -9,13 +9,17 @@ exports.create = async (req, res) => {
       colors,
       mileage,
       power,
+      image,
       torque,
       maxSpeed,
       userId,
     } = req.body;
+    
     const findcar = await OEM_spec_Model.find({ model, year, listPrice });
 
-    if (findcar) {
+    
+
+    if (findcar.length) {
       return res.status(400).send({
         msg: `Vehicle with model - ${model} year - ${year} already exists , try updating the details`,
       });
@@ -30,6 +34,7 @@ exports.create = async (req, res) => {
       power,
       torque,
       maxSpeed,
+      image,
       OEM_id: userId,
     });
     car.save();
@@ -41,6 +46,8 @@ exports.create = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+
 
 
 

@@ -4,6 +4,8 @@ const { create, getSpecs, updateSpecs, deleteSpecs, getSpecsbyId, getSpecsbyOEMI
 
 const SpecRouter = Router();
 
+
+
 SpecRouter.post("/create",authorizeRoles(['OEM']),create)
 
 SpecRouter.get("/getspecs/:OEM_id", getSpecsbyOEMId)

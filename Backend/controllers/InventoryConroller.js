@@ -11,6 +11,7 @@ exports.createInventory = async (req, res) => {
       previousBuyers,
       registrationPlace,
       userId,
+      price,
     } = req.body;
 
     const inventory = await new InventoryModel({
@@ -21,6 +22,7 @@ exports.createInventory = async (req, res) => {
       accidentsReported,
       previousBuyers,
       registrationPlace,
+      price,
       dealerId: userId,
     });
     inventory.save();
@@ -35,6 +37,32 @@ exports.getInventory = async (req, res) => {
   try {
     const { id } = req.params;
     const inventoryData = await InventoryModel.findById(id);
+    res.status(201).send({ msg: "Inventory data", data: inventoryData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+exports.alldata = async (req, res) => {
+  try {
+    const inventoryData = await InventoryModel.aggregate([
+      {
+        $lookup: {
+          from: 'oem_specs',
+          localField: 'oemSpecs',
+          foreignField: '_id',
+          as: 'oemData',
+        },
+      },{
+        $lookup: {
+          from: 'users',
+          localField: 'dealerId',
+          foreignField: '_id',
+          as: 'userData',
+        }
+      }
+    ]);
     res.status(201).send({ msg: "Inventory data", data: inventoryData });
   } catch (error) {
     console.error(error);

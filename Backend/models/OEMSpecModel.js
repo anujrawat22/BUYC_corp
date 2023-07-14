@@ -9,7 +9,8 @@ const OEMSpecsSchema = new mongoose.Schema({
   power : { type: Number, required: true },
   torque : { type: Number, required: true },
   maxSpeed: { type: Number, required: true },
-  OEM_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  image : { type: String, required: true },
+  OEM_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" ,required : true},
 });
 
 const OEM_spec_Model = mongoose.model("OEM_Specs", OEMSpecsSchema);
